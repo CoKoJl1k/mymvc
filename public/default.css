@@ -1,0 +1,36 @@
+body{
+	background: silver;
+}
+
+#header{
+	padding: 20px;
+	background: #6685E1;
+	border-radius: 5px 5px 0px 0px;
+}
+#content{
+	background: #fff;
+	padding: 20px;
+}
+
+#footer {
+	background: #6685E1;
+	padding: 20px;
+	border-radius: 0px 0px 5px 5px;
+}
+
+.col-1 {
+	cursor: pointer;
+}
+
+a.menu{
+	color: white;
+	text-decoration: none;
+}
+a.menu:hover {
+	text-decoration: none;	
+	color: #495FA0;
+}
+
+
+
+
