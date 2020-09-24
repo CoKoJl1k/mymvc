@@ -1,4 +1,4 @@
 <?php
 
-define('URL', 'http://mvcmy.zzz.com.ua/');
+define('URL', 'http://x29253z3.beget.tech/');
 ?>
