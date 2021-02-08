@@ -4,6 +4,8 @@ require 'config/paths.php';
 
 // master
 
+
+
 // Use an autoloader
 require 'libs/Bootstrap.php';
 require 'libs/Controller.php';
