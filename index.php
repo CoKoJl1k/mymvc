@@ -1,5 +1,4 @@
-<?php 
-
+<?
 require 'config/database.php';
 require 'config/paths.php';
 
@@ -13,4 +12,3 @@ require 'libs/Database.php';
 require 'libs/Session.php';
 
 $app = new Bootstrap();
-?>
