@@ -4,7 +4,7 @@ require 'config/paths.php';
 
 
 
-// master
+// new_branch
 // Use an autoloader
 require 'libs/Bootstrap.php';
 require 'libs/Controller.php';
