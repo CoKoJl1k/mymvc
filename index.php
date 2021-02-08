@@ -2,6 +2,9 @@
 require 'config/database.php';
 require 'config/paths.php';
 
+
+
+
 // Use an autoloader
 require 'libs/Bootstrap.php';
 require 'libs/Controller.php';
