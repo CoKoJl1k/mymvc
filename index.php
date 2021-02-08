@@ -2,7 +2,7 @@
 require 'config/database.php';
 require 'config/paths.php';
 
-// new branch merge
+// i did some changes
 // Use an autoloader
 require 'libs/Bootstrap.php';
 require 'libs/Controller.php';
