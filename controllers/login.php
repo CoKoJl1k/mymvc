@@ -9,14 +9,10 @@ class Login extends Controller {
 	function index() {
 		Session::init();
 		Session::destroy();
-	//	echo 'das';
-		//header('location: ../login');
  		$this -> view -> render('login/index', false);	
  	}
 
  	function run() {
  		$this -> model -> run();
  	}
- 	
 }
-?>

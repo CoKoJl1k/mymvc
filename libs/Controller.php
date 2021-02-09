@@ -2,8 +2,7 @@
 
 class Controller 
 {
-	
-	function __construct()
+    function __construct()
 	{
 		$this -> view = new View();	
 	}
@@ -18,6 +17,4 @@ class Controller
 			$this -> model = new $modelName();
 		}
 	}
-	
 }
-?>
