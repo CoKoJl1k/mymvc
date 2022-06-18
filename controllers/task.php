@@ -9,13 +9,13 @@ class Task extends Controller {
 
 	function index() {
 		//echo 'Inside index index ';	
-		$this -> view  -> userList = $this -> model -> userList(3,1);
- 		$this -> view -> render('task/index');
+		$this->view->userList = $this->model->userList(3,1);
+ 		$this->view->render('task/index');
  	}
 
  	function pagination($limit , $page, $sort_value) {
- 		$this -> view  -> userList = $this -> model -> userList($limit, $page, $sort_value);	
- 		$this -> view -> render('task/index');
+ 		$this->view->userList = $this->model->userList($limit, $page, $sort_value);
+ 		$this->view->render('task/index');
 
  	}
 
@@ -24,9 +24,11 @@ class Task extends Controller {
 		$data['name'] = $_POST['name'];
 		$data['email'] = $_POST['email'];
 		$data['text'] = $_POST['text'];
+
 		// @TODO :Do your error checking
-		$this -> model -> create($data);
-		$this -> view  -> userList = $this -> model -> userList(3, 1);
+
+		$this->model->create($data);
+		$this->view->userList = $this->model->userList(3, 1);
 	}
 }
 ?>

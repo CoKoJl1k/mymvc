@@ -33,9 +33,8 @@ class Task_Model extends Model
      	return $sth -> fetchAll();    	
 	}
 
-	public function create($data){
-
-
+	public function create($data)
+    {
 		$sth = $this -> db -> prepare ('insert into tasks (`name`, `email`, `text`  ) values (:name, :email , :text)');
 		$sth -> execute( array(
 			':name' => htmlspecialchars($data['name']),
