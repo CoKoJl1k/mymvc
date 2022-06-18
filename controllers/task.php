@@ -11,20 +11,24 @@ class Task extends Controller {
 
 	function index() {
 		//echo 'Inside index index ';
-		//$this->view->userList = $this->model->userList(3,1);
 
-        $data = $this->model->userList(3,1);
+        $limit = $this->get_params['limit'] ?: 3;
+        $page = $this->get_params['page'] ?: 1;
+        $data = $this->model->userList($limit,$page);
+
  		$this->view->render('task/index', $data);
  	}
 
 
- 	function pagination($limit = 3, $page = 0, $sort_value = 10) {
-        $limit = $this->get_params['limit'] ?: '';
-        $page = $this->get_params['page'] ?: '';
+ 	function pagination() {
+        $limit = $this->get_params['limit'] ?: 3;
+        $page = $this->get_params['page'] ?: 1;
         $sort_value = $this->get_params['sort'] ?: '';
-       // var_dump($this->get_params);
-	    //die();
-        $data = $this->model->userList($limit, $page, $sort_value);
+        //var_dump($this->get_params, $limit);
+	   // die();
+        $data = $this->model->userList((int)$limit, (int)$page, $sort_value);
+        $data['limit'] = $limit;
+
  		$this->view->render('task/index', $data);
 
  	}

@@ -25,22 +25,38 @@ class Task_Model extends Model
        // exit();
 
         if ($sort_value == 1) {
-            $sth = $this->db->prepare('select id, name, email, text, status, :page as page from tasks order by name LIMIT :start, :limit');
+            $sth = $this->db->prepare('select id, name, email, text, status from tasks order by name LIMIT :start, :limit');
         } elseif ($sort_value == 2) {
-            $sth = $this->db->prepare('select id, name, email, text, status, :page as page from tasks order by email LIMIT :start, :limit');
+            $sth = $this->db->prepare('select id, name, email, text, status from tasks order by email LIMIT :start, :limit');
         } elseif ($sort_value == 3) {
-            $sth = $this->db->prepare('select id, name, email, text, status, :page as page from tasks order by status  LIMIT :start, :limit');
+            $sth = $this->db->prepare('select id, name, email, text, status from tasks order by status  LIMIT :start, :limit');
         } else {
-            $sth = $this->db->prepare('select id, name, email, text, status, :page as page from tasks order by id LIMIT :start, :limit');
+            $sth = $this->db->prepare('select id, name, email, text, status from tasks order by id LIMIT :start, :limit');
         }
 	    $sth->bindValue(":start", $start, PDO::PARAM_INT);
         $sth->bindValue(":limit", $limit, PDO::PARAM_INT);
-        $sth->bindValue(":page", $page, PDO::PARAM_INT);
+       // $sth->bindValue(":page", $page, PDO::PARAM_INT);
         $sth->execute();
 
         $data['tasks'] = $sth->fetchAll();
-        //echo '<pre>'; var_dump($data); echo '<pre>';
+        $data['page'] = $page;
+        $data['pages'] = ceil($data['total']/3);
 
+
+        if ($page == 1) {
+            $data['Previous'] = $data['total'];
+        } else{
+            $data['Previous'] = $page - 1;
+        }
+
+        if ($page ==  $data['pages']) {
+            $data['Next'] = $data['pages'];
+        } else{
+            $data['Next'] =  $page + 1;
+        }
+
+
+        //echo '<pre>'; var_dump($data); echo '<pre>';
         //echo '<pre>'; print_r($data); echo '<pre>';
         //exit();
         return $data;

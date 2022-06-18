@@ -5,8 +5,6 @@
     $url = rtrim($url, '/');
     $url = explode('/', $url);
     $url[3] = isset( $url[3] ) ? $url[3] : 1 ;
-
-
 ?>
 
 <form method="post" action="<?php echo URL;?>task/create">
@@ -32,7 +30,7 @@
       <th scope="col"><a href="<?php echo URL; ?>task/pagination/3/<?php echo $url[3]; ?>/3">Статус</a></th> 
     </tr>
     <?php // echo '<pre>'; print_r($data); echo '<pre>';  exit();?>
-    <?php // if (count($data['tasks']) > 0) {  ?>
+    <?php if (count($data['tasks']) > 0) {  ?>
         <?php  foreach ($data['tasks'] as $value) { ?>
         <tr>
             <td><?= $value['id'] ?></td>
@@ -42,56 +40,20 @@
             <td><?= $value['status'] == 'Y' ?  'Выполнено' :  'Не выполнено' ?></td>
         </tr>
         <?php } ?>
-    <?php // } ?>
-
+    <?php  } ?>
 
 <?php
- echo '<pre>'; print_r($data); echo '<pre>';
-
-	//$pages = ceil(  $this->userList['total']/3   );
-	//$page = $this->userList[0]['page'];
-
-
-    $pages = ceil($data['total']/3);
-    $page = $data[0]['page'];
-
-    if ($page == 1) {
-    	$Previous = $page ;
-    } else{
-    	$Previous = $page - 1;
-    }
-
-    if ($page == $pages) {
-    	$Next = $pages ;
-    } else{
-    	$Next = $page + 1;
-    }
-
+//echo '<pre>'; print_r($data); echo '<pre>';
 ?>
 </table>
 
-
-<nav aria-label="Page navigation example">
-  <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="<?php echo URL; ?>task/pagination/3/<?= $Previous; ?>/<?php echo $url[4]; ?>">Предыдущая</a></li>
-     <?php  for($i = 1; $i<= $pages; $i++) : ?>
-				  <li class="page-item"><a class="page-link" href="<?php echo URL; ?>task/pagination/3/<?= $i; ?>/<?php echo $url[4]; ?>"><?= $i; ?></a></li>
-	   <?php endfor; ?>
-     <li class="page-item"><a class="page-link" href="<?php echo URL; ?>task/pagination/3/<?= $Next; ?>/<?php echo $url[4]; ?>">Следующая</a></li>
-  </ul>
-</nav>
-
-
 <nav aria-label="Page navigation example">
     <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="<?= URL ?>task/pagination/3/<?= $Previous; ?>/<?php echo $url[4]; ?>">Предыдущая</a></li>
-        <?php  for($i = 1; $i<= $pages; $i++) : ?>
-
-            <li class="page-item"><a class="page-link" href="<?=URL?>task/pagination/?limit=3&page=<?= $i ?>"><?= $i ?></a></li>
-
-
+        <li class="page-item"><a class="page-link" href="<?= URL ?>task/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['Previous'] ?>">Предыдущая</a></li>
+        <?php  for($i = 1; $i<= $data['pages']; $i++) : ?>
+            <li class="page-item"><a class="page-link" href="<?=URL?>task/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $i ?>"><?= $i ?></a></li>
         <?php endfor; ?>
-        <li class="page-item"><a class="page-link" href="<?=URL ?>task/pagination/3/<?= $Next; ?>/<?php echo $url[4]; ?>">Следующая</a></li>
+        <li class="page-item"><a class="page-link" href="<?= URL ?>task/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['Next'] ?>">Следующая</a></li>
     </ul>
 </nav>
 
