@@ -1,6 +1,6 @@
 <h4>Создание задачи</h4>
 
-<?php  
+<?php
     $url = isset($_GET['url']) ? $_GET['url'] : null ;
     $url = rtrim($url, '/');
     $url = explode('/', $url);
@@ -11,7 +11,7 @@
 	<label class="col-1">Имя</label><input type="name" name="name"><br/>
 	<label class="col-1">Email</label><input type="email" name="email"><br/>
 	<label class="col-1">Текст задачи</label><textarea type="textarea" name="text"></textarea><br/>
-	<label class="col-1">&nbsp;</label> <button type="submit" class="btn btn-primary">Добавить</button> 
+	<label class="col-1">&nbsp</label> <button type="submit" class="btn btn-primary">Добавить</button>
 </form>
 
   <div class="row">
@@ -51,7 +51,7 @@
     <ul class="pagination">
         <li class="page-item"><a class="page-link" href="<?= URL ?>task/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['Previous'] ?>">Предыдущая</a></li>
         <?php  for($i = 1; $i<= $data['pages']; $i++) : ?>
-            <li class="page-item"><a class="page-link" href="<?=URL?>task/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $i ?>"><?= $i ?></a></li>
+            <li class="page-item  <?= $data['page'] == $i ? 'active' : ''?> " ><a class="page-link " href="<?=URL?>task/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $i ?>"><?= $i ?></a></li>
         <?php endfor; ?>
         <li class="page-item"><a class="page-link" href="<?= URL ?>task/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['Next'] ?>">Следующая</a></li>
     </ul>
