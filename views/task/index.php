@@ -1,9 +1,12 @@
 <h4>Создание задачи</h4>
+
 <?php  
     $url = isset($_GET['url']) ? $_GET['url'] : null ;
     $url = rtrim($url, '/');
     $url = explode('/', $url);
-    $url[3] = isset( $url[3] ) ? $url[3] : 1 ; 
+    $url[3] = isset( $url[3] ) ? $url[3] : 1 ;
+
+
 ?>
 
 <form method="post" action="<?php echo URL;?>task/create">
@@ -27,21 +30,30 @@
       <th scope="col"><a href="<?php echo URL; ?>task/pagination/3/<?php echo $url[3]; ?>/2">email</a></th>    
       <th scope="col">Текст задачи</th> 
       <th scope="col"><a href="<?php echo URL; ?>task/pagination/3/<?php echo $url[3]; ?>/3">Статус</a></th> 
-    </tr>	
-   
-<?php
-	foreach ($this -> userList as $key => $value) {
-		echo '<tr>';
-		echo '<td>'.$value['id'].'</td>';
-		echo '<td>'.$value['name'].'</td>';
-		echo '<td>'.$value['email'].'</td>';
-		echo '<td>'.$value['text'].'</td>';
-		echo '<td>'   .$value['status'] = $value['status'] == 'Y' ? 'Выполнено' :  'Не выполнено'.'</td>';
-		echo '</tr>';
-	}	
+    </tr>
+    <?php // echo '<pre>'; print_r($data); echo '<pre>';  exit();?>
+    <?php // if (count($data['tasks']) > 0) {  ?>
+        <?php  foreach ($data['tasks'] as $value) { ?>
+        <tr>
+            <td><?= $value['id'] ?></td>
+            <td><?= $value['name'] ?></td>
+            <td><?= $value['email'] ?></td>
+            <td><?= $value['text'] ?></td>
+            <td><?= $value['status'] == 'Y' ?  'Выполнено' :  'Не выполнено' ?></td>
+        </tr>
+        <?php } ?>
+    <?php // } ?>
 
-	$pages = ceil($this -> userList[0]['total']/3);
-	$page = $this -> userList[0]['page'];
+
+<?php
+ echo '<pre>'; print_r($data); echo '<pre>';
+
+	//$pages = ceil(  $this->userList['total']/3   );
+	//$page = $this->userList[0]['page'];
+
+
+    $pages = ceil($data['total']/3);
+    $page = $data[0]['page'];
 
     if ($page == 1) {
     	$Previous = $page ;
@@ -54,8 +66,11 @@
     } else{
     	$Next = $page + 1;
     }
+
 ?>
 </table>
+
+
 <nav aria-label="Page navigation example">
   <ul class="pagination">
     <li class="page-item"><a class="page-link" href="<?php echo URL; ?>task/pagination/3/<?= $Previous; ?>/<?php echo $url[4]; ?>">Предыдущая</a></li>
@@ -66,3 +81,21 @@
   </ul>
 </nav>
 
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="<?= URL ?>task/pagination/3/<?= $Previous; ?>/<?php echo $url[4]; ?>">Предыдущая</a></li>
+        <?php  for($i = 1; $i<= $pages; $i++) : ?>
+
+            <li class="page-item"><a class="page-link" href="<?=URL?>task/pagination/?limit=3&page=<?= $i ?>"><?= $i ?></a></li>
+
+
+        <?php endfor; ?>
+        <li class="page-item"><a class="page-link" href="<?=URL ?>task/pagination/3/<?= $Next; ?>/<?php echo $url[4]; ?>">Следующая</a></li>
+    </ul>
+</nav>
+
+<?php
+//var_dump(  $url[4] );
+//exit();
+?>

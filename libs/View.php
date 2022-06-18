@@ -6,9 +6,9 @@ class View {
 
 	}
 
-    public function render($name){
+    public function render($name, $data = null){
 			require 'views/header.php'; 
 			require 'views/'.$name.'.php';
-			require 'views/footer.php'; 	
+			require 'views/footer.php';
 	}
 }

@@ -2,8 +2,8 @@
 
 class Bootstrap {
 
-	function __construct () {
-
+	function __construct()
+    {
 		$url = isset($_GET['url']) ? $_GET['url'] : null ;
 		$url = rtrim($url, '/');
 		$url = explode('/', $url);
@@ -22,12 +22,10 @@ class Bootstrap {
 			require 'controllers/apperror.php';
 			//$controller = new AppError();
 			//return false;
-
 			throw new Exception("The file :  $file  Does not exists. ");
 		}
 
-var_dump($url[0]);
-
+//var_dump($url[0]);
 
 		$controller = new $url[0];
 		$controller->loadModel($url[0]);

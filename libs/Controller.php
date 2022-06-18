@@ -2,9 +2,16 @@
 
 class Controller 
 {
+    public $get_params;
+
     function __construct()
 	{
-		$this -> view = new View();	
+        $url = $_SERVER['REQUEST_URI'] ?: '';
+        $url_components = parse_url($url);
+        parse_str($url_components['query'], $get_params);
+        $this->get_params = $get_params;
+
+		$this->view = new View();
 	}
 
 	public function loadModel($name)
