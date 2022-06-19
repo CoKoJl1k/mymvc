@@ -35,6 +35,12 @@ class Comment_Model extends Model
             }
         }
 
+        $data['limit'] = $limit;
+        $data['page'] = $page;
+        $data['pages'] = ceil($data['total']/3);
+        $data['Previous'] = $page == 1 ? $data['total'] : $page - 1;
+        $data['Next'] = $page == $data['pages'] ? $data['pages'] : $page + 1;
+
         return $data;
 	}
 
@@ -44,13 +50,14 @@ class Comment_Model extends Model
     public function create($data)
     {
         $count = 0;
-        //var_dump($data);
+       // var_dump($data);
+       // exit();
         if (!empty($data)) {
             $sth = $this->db->prepare('insert into '.self::$table.' (name, email, text) values (:name, :email, :text)');
             $sth->execute(array(
-                ':name' =>  htmlspecialchars($data['name']),
-                ':email' => htmlspecialchars($data['email']),
-                ':text' => htmlspecialchars($data['text'])
+                ':name' => $data['name'],
+                ':email' => $data['email'],
+                ':text' => $data['text']
             ));
             $count = $sth->rowCount();
         }

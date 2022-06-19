@@ -31,6 +31,11 @@ a.menu:hover {
 	color: #495FA0;
 }
 
-
+.btn.btn-primary{
+	margin-top: 15px;
+}
+h4	{
+	text-align: center;
+}
 
 

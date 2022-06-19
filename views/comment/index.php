@@ -1,15 +1,7 @@
-<h4>Добавление комментария</h4>
 
-<form method="post" action="<?php echo URL;?>task/create">
-	<label class="col-1">Имя</label><input type="name" name="name"><br/>
-	<label class="col-1">Email</label><input type="email" name="email"><br/>
-	<label class="col-1">Текст комментария</label><textarea type="textarea" name="text"></textarea><br/>
-	<label class="col-1">&nbsp</label> <button type="submit" class="btn btn-primary">Добавить</button>
-</form>
-
-  <div class="row">
-        <div class="col-2"> <h4>Список комментариев</h4></div>
-  </div>
+<div class="row">
+    <div class="col-2"> <h4>Список комментариев</h4></div>
+</div>
 
 <?php
 //echo '<pre>'; print_r($data); echo '<pre>';
@@ -19,19 +11,19 @@
   <thead>
     <tr>
         <th scope="col">
-            <a  href="<?=URL?>comment/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][0] ?>">№</a>
+            <a  href="<?=URL?>?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][0] ?>">№</a>
         </th>
         <th scope="col">
-            <a  href="<?=URL?>comment/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][1] ?>">Имя</a>
+            <a  href="<?=URL?>?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][1] ?>">Имя</a>
         </th>
         <th scope="col">
-            <a  href="<?=URL?>comment/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][2] ?>">email</a>
+            <a  href="<?=URL?>?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][2] ?>">email</a>
         </th>
         <th scope="col">
-            <a  href="<?=URL?>comment/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][3] ?>">Текст задачи</a>
+            <a  href="<?=URL?>?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][3] ?>">Текст задачи</a>
         </th>
         <th scope="col">
-            <a  href="<?=URL?>comment/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][4] ?>">Статус</a>
+            <a  href="<?=URL?>?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][4] ?>">Статус</a>
         </th>
 
     </tr>
@@ -52,15 +44,38 @@
 
 <nav aria-label="Page navigation example">
     <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="<?= URL ?>comment/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['Previous'] ?>">Предыдущая</a></li>
+        <li class="page-item"><a class="page-link" href="<?= URL ?>?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['Previous'] ?>">Предыдущая</a></li>
         <?php  for($i = 1; $i<= $data['pages']; $i++) : ?>
-            <li class="page-item  <?= $data['page'] == $i ? 'active' : ''?> " ><a class="page-link " href="<?=URL?>comment/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $i ?>"><?= $i ?></a></li>
+            <li class="page-item  <?= $data['page'] == $i ? 'active' : ''?> " ><a class="page-link " href="<?=URL?>?limit=<?= $data['limit'] ?: '' ?>&page=<?= $i ?>"><?= $i ?></a></li>
         <?php endfor; ?>
-        <li class="page-item"><a class="page-link" href="<?= URL ?>comment/pagination/?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['Next'] ?>">Следующая</a></li>
+        <li class="page-item"><a class="page-link" href="<?= URL ?>?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['Next'] ?>">Следующая</a></li>
     </ul>
 </nav>
+<div >
+    <?php // echo '<pre>'; print_r(URL); echo '<pre>';  exit();?>
+</div>
+<h4>Добавление комментария</h4>
+<form method="post" action="<?=URL?>comment/create">
+    <div class = "d-flex justify-content-center">
+        <div class="col-md-4 mb-3">
+            <label for="nameUser">Имя</label>
+            <input name="name" class="form-control" id="nameUser" >
 
-<?php
-//var_dump(  $url[4] );
-//exit();
-?>
+            <label for="phoneUser">Телефон</label>
+            <input class="form-control" id="phoneUser" placeholder="123-45-67">
+           <!-- <input class="form-control" id="phoneUser" placeholder="123-45-67"  pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}" required>-->
+            <label for="emailUser">Email address</label>
+            <input name="email" type="email" class="form-control" id="emailUser" placeholder="name@example.com">
+
+            <label for="text">Текст сообщения</label>
+            <textarea name ="text" class="form-control" id="text" rows="3"></textarea>
+
+            <div class = "d-flex justify-content-center">
+                 <button type="submit" class="btn btn-primary">Отправить</button>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
