@@ -11,7 +11,7 @@ class Bootstrap {
 		/*print_r($url) ;*/
 
 		if (empty($url[0])){	
-			$url[0] = 'task';
+			$url[0] = 'comment';
 		}
 
 		$file = 'controllers/' . $url[0] . '.php';

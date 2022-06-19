@@ -12,10 +12,8 @@ class Controller
 
         $get_params['limit'] = $get_params['limit'] ?: '';
         $get_params['limit'] = htmlspecialchars(stripslashes($get_params['limit']));
-
         $get_params['page'] = $get_params['page'] ?: '';
         $get_params['page'] = htmlspecialchars(stripslashes($get_params['page']));
-
         $get_params['sort'] = $get_params['sort'] ?: '';
         $get_params['sort'] = htmlspecialchars(stripslashes($get_params['sort']));
 
