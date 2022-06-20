@@ -17,6 +17,7 @@ class Controller
         $get_params['sort'] = $get_params['sort'] ?: '';
         $get_params['sort'] = htmlspecialchars(stripslashes($get_params['sort']));
 
+
         $this->get_params = $get_params;
 
 		$this->view = new View();
