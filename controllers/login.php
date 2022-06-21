@@ -9,10 +9,10 @@ class Login extends Controller {
 	function index() {
 		Session::init();
 		Session::destroy();
- 		$this -> view -> render('login/index', false);	
+ 		$this->view ->render('login/index', false);
  	}
 
  	function run() {
- 		$this -> model -> run();
+ 		$this->model -> run();
  	}
 }

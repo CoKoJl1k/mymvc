@@ -49,12 +49,25 @@ class Comment extends Controller {
         $this->view->render('comment/index', $data);
 	}
 
+
+	public function ajaxDetail()
+    {
+        if(isset($_POST['id'])) {
+            $id = htmlspecialchars(stripslashes($_POST['id']));
+            $data = $this->model->detail($id);
+
+            //var_dump($data);
+            echo json_encode($data);
+        }
+        return false;
+    }
+
+
     public function saveFile()
     {
         $target_dir = "uploads/";
-
         $target_file = $target_dir . date("YmdHis"). '_' .basename(htmlspecialchars(stripslashes($_FILES["fileToUpload"]["name"])));
-        $file_name = basename($target_file);
+        $file_name = !empty($_FILES["fileToUpload"]["name"]) ? basename($target_file) : '';
         //var_dump($file_name );
         //exit();
         $uploadOk = 1;

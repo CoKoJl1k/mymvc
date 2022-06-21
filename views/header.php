@@ -19,7 +19,7 @@
 <div id="header">
 	<div class="row">
 		<?php if (Session::get('loggedIn') == false ): ?>
-			<div class="col-11"><a class="menu" href="<?php echo URL; ?>task">Главная страница</a> </div>
+			<div class="col-11"><a class="menu" href="<?php echo URL; ?>comment">Главная страница</a> </div>
 		<?php endif; ?>
 
 <!--<?php echo Session::get('loggedIn');?>-->

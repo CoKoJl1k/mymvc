@@ -36,11 +36,10 @@
         </th>
         <th>Предварительный просмотр</th>
         <th scope="col">Изображение</th>
-
     </tr>
     <?php // echo '<pre>'; print_r($data); echo '<pre>';  exit();?>
-    <?php if (count($data['tasks']) > 0) {  ?>
-        <?php  foreach ($data['tasks'] as $value) { ?>
+    <?php if (count($data['comment']) > 0) {  ?>
+        <?php  foreach ($data['comment'] as $value) { ?>
         <tr>
             <td><?= $value['id'] ?></td>
             <td><?= $value['name'] ?></td>
@@ -48,13 +47,14 @@
             <td><?= $value['email'] ?></td>
             <td><?= $value['text'] ?></td>
             <td><?= $value['status'] == 'Y' ?  'Принят' :  'Отклонен' ?></td>
-
             <td><?= $value['file_name']?></td>
-
             <td><?= $value['date_create']?></td>
-            <td><a href="#">Предварительный просмотр</a></td>
+
+           <!-- <td><a class="opener" href="#">Предварительный просмотр</a></td>-->
+            <td><a class="opener" href="#"><input type="hidden" value="<?= $value['id'] ?>"/>Предварительный просмотр</a></td>
 
             <td><img src="<?=URL?>/uploads/<?= $value['file_name']?>"/> </td>
+
         </tr>
         <?php } ?>
     <?php } ?>
@@ -82,13 +82,13 @@
     <div class = "d-flex justify-content-center">
         <div class="col-md-4 mb-3">
             <label for="nameUser">Имя</label>
-            <input name="name" class="form-control" id="nameUser" >
+            <input name="name" class="form-control" id="nameUser" required>
 
             <label for="phoneUser">Телефон</label>
-            <input name="phone" class="form-control" id="phoneUser" placeholder="+(375) (99) 999-99-99">
+            <input name="phone" class="form-control" id="phoneUser" placeholder="+(375) (99) 999-99-99" required>
            <!-- <input class="form-control" id="phoneUser" placeholder="123-45-67"  pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}" required>-->
             <label for="emailUser">Email address</label>
-            <input name="email" type="email" class="form-control" id="emailUser" placeholder="name@example.com">
+            <input name="email" type="email" class="form-control" id="emailUser" placeholder="name@example.com" required>
 
             <label for="text">Текст сообщения</label>
             <textarea name ="text" class="form-control" id="text" rows="3"></textarea>
@@ -104,6 +104,53 @@
 
 </form>
 
-<?php
-//echo date("YmdHis");
-?>
+<div id="ModalDialogComment">
+
+</div>
+
+<script>
+    $(function() {
+        $( "#ModalDialogComment" ).dialog({
+            width : 650,
+            height:550,
+            title:"Детальная информация",
+            modal : true ,
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 300
+            },
+            hide: {
+                effect: "explode",
+                duration: 300
+            }
+        });
+
+        $(document).on('click', '.opener', function () {
+            let id_val = $("input", this ).val();
+            $( ".modal-dialog__data" ).remove();
+            //id_val = 2088;
+            $.post(
+                "comment/ajaxDetail",
+                {
+                    id: id_val,
+                },
+                function(data, status){
+                    data = JSON.parse(data);
+                    if (status ==='success' && data.length !== 0) {
+                        $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Имя : </b>"+data[0].name+"</p>" );
+                        $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Email : </b>"+data[0].email+"</p>" );
+                        $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Текст комментария: </b>"+data[0].text+"</p>" );
+                        $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Телефон : </b>"+data[0].phone+"</p>" );
+                        $( "#ModalDialogComment" ).append( "<div class='modal-dialog__data'><img src='uploads/"+data[0].file_name+"'/></div>" );
+                        $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Дата создания : </b>"+data[0].date_create+"</p>" );
+
+                        $( "#ModalDialogComment" ).dialog( "open" );
+                    } else {
+                        $( "#ModalDialogComment" ).append( "<h4 class='modal-dialog__data'>Данные не найдены!</h4>" );
+                        $( "#ModalDialogComment" ).dialog( "open" );
+                    }
+                });
+        });
+    });
+</script>

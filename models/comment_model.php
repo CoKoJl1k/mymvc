@@ -27,10 +27,10 @@ class Comment_Model extends Model
         $sth->bindValue(":limit", $limit, PDO::PARAM_INT);
 
         $sth->execute();
-        $data['tasks'] = $sth->fetchAll(PDO::FETCH_ASSOC);
+        $data['comment'] = $sth->fetchAll(PDO::FETCH_ASSOC);
 
-        if(!empty($data['tasks'][0])) {
-            foreach ($data['tasks'][0] as $key => $value) {
+        if(!empty($data['comment'][0])) {
+            foreach ($data['comment'][0] as $key => $value) {
                 $data['columns'][] = $key;
             }
         }
@@ -80,4 +80,15 @@ class Comment_Model extends Model
 		}
 
 	}
+
+    public function detail($id = 0)
+    {
+        $sth = $this->db->prepare('select id, name, email, text, status, phone, file_name, date_create from '.self::$table. ' where id = :id');
+        $sth->bindValue(":id", $id, PDO::PARAM_INT);
+        $sth->execute();
+        $data = $sth->fetchAll(PDO::FETCH_ASSOC);
+       // var_dump($data);
+       // exit();
+        return $data;
+    }
 }
