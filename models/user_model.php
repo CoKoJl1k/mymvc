@@ -51,33 +51,7 @@ class User_Model extends Model
 		) );
 		return $sth->fetch(PDO::FETCH_ASSOC);
 	}
-/*
-	public function editSave($data)
-	{
-		if ($data['status'] == "") {
-			$data['status'] = "N";
-		}
 
-		$data_text_old = $this->userSingleList($data['id']);
-
-		if ($data_text_old['text'] == $data['text'] ) {
-			$sth = $this->db->prepare('update comments set `status` = :status  where id = :id' );
-			$sth -> execute( array(
-			':id' => $data['id'],
-			':status' => htmlspecialchars($data['status'])
-			));
-		} else {
-			$sth = $this->db->prepare ('update comments set `text` = :text , `status` = :status, `status_edit` =  :status_edit  where id = :id' );
-			$sth -> execute( array(
-			':id' => $data['id'],
-			':text' => htmlspecialchars($data['text']),
-			':status' => htmlspecialchars($data['status']),
-			':status_edit' => 'отредактировано администратором'		
-			));
-		}
-		
-	}
-*/
     public function delete($id)
 	{
 		$sth = $this->db->prepare ('delete from comments where id = :id');
@@ -97,8 +71,6 @@ class User_Model extends Model
 
     public function textUpdateComment($data)
     {
-        //var_dump($data);
-       // exit();
         $sth = $this->db->prepare('update comments set text = :text, status_edit = :role where id = :id');
         return $sth->execute( array(
             ':id' => $data['id'],

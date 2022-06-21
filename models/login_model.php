@@ -6,7 +6,6 @@ class Login_Model extends Model
 	function __construct()
 	{
 		parent::__construct();
-		//echo md5('123');
 	}
 
 	function checkUser($data_check)

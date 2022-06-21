@@ -1,12 +1,7 @@
-
 <div class="row">
     <div class="col-2"><h4>Список комментариев</h4></div>
 </div>
 
-<?php
-//$data=array('limit'=>3);
-//echo '<pre>'; print_r($data); echo '<pre>';
-?>
 <?php if (count($data) > 0) {  ?>
     <table class="table">
         <thead>
@@ -27,16 +22,13 @@
             <th scope="col">
                 <a  href="<?=URL?>user?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][4] ?>">Статус</a>
             </th>
-          <!--  <th scope="col">Изображение</th>-->
             <th scope="col">
                 <a  href="<?=URL?>user?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][6] ?>">Дата создания</a>
             </th>
-        <!--    <th>Предварительный просмотр</th>-->
             <th scope="col">Изображение</th>
             <th scope="col">#</th>
             <th scope="col">#</th>
         </tr>
-        <?php // echo '<pre>'; print_r($data); echo '<pre>';  exit();?>
         <?php if (count($data['comment']) > 0) {  ?>
             <?php  foreach ($data['comment'] as $value) { ?>
                 <tr>
