@@ -15,7 +15,7 @@ class Comment extends Controller {
         $sort = $this->get_params['sort'] ?: 'date_create';
         $descAsc = $this->get_params['$descAsc'] ?: 'DESC';
 
-        $data = $this->model->userList($limit, $page, $sort, $descAsc);
+        $data = $this->model->getListComments($limit, $page, $sort, $descAsc);
 
  		$this->view->render('comment/index', $data);
  	}
@@ -43,9 +43,8 @@ class Comment extends Controller {
             $message .= ' Data was saved! ';
         }
 
-        $data = $this->model->userList();
+        $data = $this->model->getListComments();
         $data['message'] = $message;
-
         $this->view->render('comment/index', $data);
 	}
 

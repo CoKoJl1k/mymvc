@@ -1,4 +1,8 @@
 <h4>Редактирование комментария</h4>
+<?php
+echo '<pre>'; print_r($data); echo '</pre>';
+echo '<pre>'; print_r($_SESSION); echo '</pre>';
+?>
 
 <form method="post" action="<?=URL?>user/editSave">
     <div class = "d-flex justify-content-center">
@@ -7,7 +11,7 @@
             <input type="hidden" name="role" value="<?=$this->user['role']?>">
 
             <label><b>Текст комментария</b></label>
-            <textarea class="form-control"  type="textarea" name="text" rows="10" value="<?=$this->user['text'] ?> "><?=$this->user['text']?></textarea>
+            <textarea class="form-control"  type="textarea" name="text" rows="10" value="<?=$data['text'] ?> "><?=$data['text']?></textarea>
             <!--<label class="col-2">Выполнено</label>-->
             <?php
             /*

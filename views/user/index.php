@@ -47,7 +47,11 @@
                     <td><?= $value['phone'] ?></td>
                     <td><?= $value['email'] ?></td>
                     <td><?= $value['text'] ?></td>
-                    <td><?= $value['status'] == 'Y' ?  'Принят' :  'Отклонен' ?></td>
+
+                  <!--  <td><?//= $value['status'] == 'Y' ?  'Принят' :  'Отклонен' ?></td>-->
+
+                    <td><a  href="<?URL?>user/statusUpdate?id=<?= $value['id']?>&status=<?= $value['status']?>"><?= $value['status'] == 'Y' ?  'Принят' :  'Отклонен' ?></a></td>
+
                    <!-- <td><?//=  $value['file_name']?></td>-->
                     <td><?= $value['date_create']?></td>
 
@@ -65,62 +69,11 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination">
         <?php if ($data['page'] != 1) { ?>
-            <li class="page-item"><a class="page-link" href="<?= URL ?>user?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['Previous'] ?>">Предыдущая</a></li>
+            <li class="page-item"><a class="page-link" href="<?=URL?>user?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['Previous'] ?>">Предыдущая</a></li>
         <?php } ?>
         <?php  for($i = 1; $i<= $data['pages']; $i++) {?>
             <li class="page-item  <?= $data['page'] == $i ? 'active' : ''?> " ><a class="page-link " href="<?=URL?>user?limit=<?= $data['limit'] ?: '' ?>&page=<?= $i ?>"><?= $i ?></a></li>
         <?php }?>
-        <li class="page-item"><a class="page-link" href="<?= URL ?>user?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['Next'] ?>">Следующая</a></li>
+        <li class="page-item"><a class="page-link" href="<?=URL?>user?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['Next'] ?>">Следующая</a></li>
     </ul>
 </nav>
-<!--
-<div id="ModalDialogComment">
-</div>
--->
-<script>
-    /*
-    $(function() {
-        $( "#ModalDialogComment" ).dialog({
-            width : 650,
-            height:550,
-            title:"Детальная информация",
-            modal : true ,
-            autoOpen: false,
-            show: {
-                effect: "blind",
-                duration: 300
-            },
-            hide: {
-                effect: "explode",
-                duration: 300
-            }
-        });
-
-        $(document).on('click', '.opener', function () {
-            let id_val = $("input", this ).val();
-            $( ".modal-dialog__data" ).remove();
-            //id_val = 2088;
-            $.post(
-                "<?=URL?>comment/ajaxDetail",
-                {
-                    id: id_val,
-                },
-                function(data, status){
-                    data = JSON.parse(data);
-                    // console.log(data);
-                    if (status ==='success' && data.length !== 0) {
-                        $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Имя : </b>"+data[0].name+"</p>" );
-                        $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Email : </b>"+data[0].email+"</p>" );
-                        $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Текст комментария: </b>"+data[0].text+"</p>" );
-                        $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Телефон : </b>"+data[0].phone+"</p>" );
-                        $( "#ModalDialogComment" ).append( "<div class='modal-dialog__data'><img src='<?=URL?>uploads/"+data[0].file_name+"'/></div>" );
-                        $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Дата создания : </b>"+data[0].date_create+"</p>" );
-                        $( "#ModalDialogComment" ).dialog( "open" );
-                    } else {
-                        $( "#ModalDialogComment" ).append( "<h4 class='modal-dialog__data'>Данные не найдены!</h4>" );
-                        $( "#ModalDialogComment" ).dialog( "open" );
-                    }
-                });
-        });
-    });*/
-</script>

@@ -8,7 +8,7 @@ class Comment_Model extends Model
 		parent::__construct();
 	}
 
-	public function userList($limit = null, $page = null, $sort = null)
+	public function getListComments($limit = null, $page = null, $sort = null)
 	{
         $sthTotal = $this->db->prepare('select count(id) as total from comments');
         $sthTotal->execute();

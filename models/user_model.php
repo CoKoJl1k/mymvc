@@ -8,7 +8,7 @@ class User_Model extends Model
 		parent::__construct();
 	}
 
-    public function userList($limit = null, $page = null, $sort = null)
+    public function getListComments($limit = null, $page = null, $sort = null)
     {
         $sthTotal = $this->db->prepare('select count(id) as total from comments');
         $sthTotal->execute();
@@ -43,15 +43,15 @@ class User_Model extends Model
         return $data;
     }
 
-	public function userSingleList($id)
+	public function getComment($id)
 	{
 		$sth = $this->db->prepare('select id, text, status from comments where id = :id');
 		$sth->execute(array(
 			':id' => $id 
 		) );
-		return $sth->fetch();
+		return $sth->fetch(PDO::FETCH_ASSOC);
 	}
-
+/*
 	public function editSave($data)
 	{
 		if ($data['status'] == "") {
@@ -77,7 +77,7 @@ class User_Model extends Model
 		}
 		
 	}
-
+*/
     public function delete($id)
 	{
 		$sth = $this->db->prepare ('delete from comments where id = :id');
@@ -86,4 +86,22 @@ class User_Model extends Model
 		));
 	}
 
+    public function statusUpdateComment($data)
+    {
+        $sth = $this->db->prepare('update comments set `status` = :status where id = :id');
+        $sth->execute( array(
+            ':id' => $data['id_comment'],
+            ':status' => $data['status'],
+        ));
+    }
+
+    public function textUpdateComment($data)
+    {
+        $sth = $this->db->prepare('update comments set `text` = :text, `text` = :text, `status_edit` = :role   where id = :id');
+        $sth->execute( array(
+            ':id' => $data['id_comment'],
+            ':text' => $data['text'],
+            ':role' => $data['role']
+        ));
+    }
 }
