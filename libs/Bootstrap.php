@@ -8,8 +8,6 @@ class Bootstrap {
 		$url = rtrim($url, '/');
 		$url = explode('/', $url);
 
-		/*print_r($url) ;*/
-
 		if (empty($url[0])){	
 			$url[0] = 'comment';
 		}
@@ -19,13 +17,12 @@ class Bootstrap {
 		if (file_exists($file)){
 			require $file;
 		} else{
-			require 'controllers/apperror.php';
+			//require 'controllers/apperror.php';
 			//$controller = new AppError();
 			//return false;
 			throw new Exception("The file :  $file  Does not exists. ");
 		}
 
-//var_dump($url[0]);
 
 		$controller = new $url[0];
 		$controller->loadModel($url[0]);
