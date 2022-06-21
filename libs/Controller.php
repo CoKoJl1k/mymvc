@@ -17,6 +17,8 @@ class Controller
         $get_params['sort'] = $get_params['sort'] ?: '';
         $get_params['sort'] = htmlspecialchars(stripslashes($get_params['sort']));
 
+        $get_params['id'] = $get_params['id'] ?: 0;
+        $get_params['id'] = htmlspecialchars(stripslashes($get_params['id']));
 
         $this->get_params = $get_params;
 

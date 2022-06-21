@@ -2,45 +2,54 @@
 
 class User_Model extends Model
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
 	}
 
-	public function userList($limit=false, $page = false, $sort_value = false)
-	{
-		$limit = (int) $limit;
-		$start = (int) $start;
-		$sort_value = (int) $sort_value;
-		$start = ($page - 1) * $limit;
+    public function userList($limit = null, $page = null, $sort = null)
+    {
+        $sthTotal = $this->db->prepare('select count(id) as total from comments');
+        $sthTotal->execute();
+        $arrTotal = $sthTotal->fetchAll();
+        $data['total'] = $arrTotal[0]['total'];
 
-		if ($sort_value == 1) {
-		    $sth = $this -> db -> prepare('select id,  name, email , text, status, (select count(id)  as id  from tasks) as total, :page as page, status_edit from tasks order by name  LIMIT :start, :limit');
-		 } elseif ($sort_value == 2) {
-		    $sth = $this -> db -> prepare('select id,  name, email , text , status, (select count(id)  as id  from tasks) as total, :page as page, status_edit from tasks order by email  LIMIT :start, :limit');   
-		  } elseif ($sort_value == 3) {
-		    $sth = $this -> db -> prepare('select id,  name, email , text , status, (select count(id)  as id  from tasks) as total, :page as page, status_edit from tasks order by status  LIMIT :start, :limit');      	
-		} else {
-			$sth = $this -> db -> prepare('select id,  name, email , text, status, (select count(id)  as id  from tasks) as total, :page as page, status_edit from tasks order by id LIMIT :start, :limit');
-		}
+        $limit = $limit ?: 3;
+        $page =  $page ?: 1;
+        $sort = $sort ?: 'date_create';
+        $start = ($page - 1) * $limit;
 
-	    $sth->bindValue(":start", $start, PDO::PARAM_INT);
+        $sth = $this->db->prepare('select id, name, email, text, status, phone, file_name, date_create from comments order by '.$sort.' DESC LIMIT :start, :limit');
+
+        $sth->bindValue(":start", $start, PDO::PARAM_INT);
         $sth->bindValue(":limit", $limit, PDO::PARAM_INT);
-        $sth->bindValue(":page", $page, PDO::PARAM_INT);
-       
-        $sth -> execute();
-     	return $sth -> fetchAll();    
 
-	}
+        $sth->execute();
+        $data['comment'] = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+        if(!empty($data['comment'][0])) {
+            foreach ($data['comment'][0] as $key => $value) {
+                $data['columns'][] = $key;
+            }
+        }
+
+        $data['limit'] = $limit;
+        $data['page'] = $page;
+        $data['pages'] = ceil($data['total']/3);
+        $data['Previous'] = $page == 1 ? $data['total'] : $page - 1;
+        $data['Next'] = $page == $data['pages'] ? $data['pages'] : $page + 1;
+
+        return $data;
+    }
 
 	public function userSingleList($id)
 	{
-		$sth = $this -> db -> prepare('select id, text, status from tasks where id = :id');
-		$sth -> execute(  array(
+		$sth = $this->db->prepare('select id, text, status from comments where id = :id');
+		$sth->execute(array(
 			':id' => $id 
 		) );
-		return $sth -> fetch();
+		return $sth->fetch();
 	}
 
 	public function editSave($data)
@@ -49,17 +58,16 @@ class User_Model extends Model
 			$data['status'] = "N";
 		}
 
-		$data_text_old = $this -> userSingleList($data['id']);
+		$data_text_old = $this->userSingleList($data['id']);
 
-		if ( $data_text_old['text'] == $data['text'] ) {
-			$sth = $this -> db -> prepare ('update tasks set  `status` = :status  where id = :id' );
+		if ($data_text_old['text'] == $data['text'] ) {
+			$sth = $this->db->prepare('update comments set `status` = :status  where id = :id' );
 			$sth -> execute( array(
-			':id' => $data['id'],		
+			':id' => $data['id'],
 			':status' => htmlspecialchars($data['status'])
 			));
-
 		} else {
-			$sth = $this -> db -> prepare ('update tasks set `text` = :text , `status` = :status, `status_edit` =  :status_edit  where id = :id' );
+			$sth = $this->db->prepare ('update comments set `text` = :text , `status` = :status, `status_edit` =  :status_edit  where id = :id' );
 			$sth -> execute( array(
 			':id' => $data['id'],
 			':text' => htmlspecialchars($data['text']),
@@ -72,11 +80,10 @@ class User_Model extends Model
 
     public function delete($id)
 	{
-		$sth = $this -> db -> prepare ('delete from tasks where id = :id');
+		$sth = $this->db->prepare ('delete from comments where id = :id');
 		$sth -> execute( array(
 			':id' => $id
 		));
 	}
 
 }
-?>

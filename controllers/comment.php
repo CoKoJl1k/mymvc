@@ -24,10 +24,10 @@ class Comment extends Controller {
     {
 		$data_save = array();
         if (!empty($_POST)) {
-            $data_save['name'] = htmlspecialchars(stripslashes($_POST['name']));
-            $data_save['email'] = htmlspecialchars(stripslashes($_POST['email']));
-            $data_save['text'] = htmlspecialchars(stripslashes($_POST['text']));
-            $data_save['phone'] = htmlspecialchars(stripslashes($_POST['phone']));
+            $data_save['name'] = htmlspecialchars($_POST['name']);
+            $data_save['email'] = htmlspecialchars($_POST['email']);
+            $data_save['text'] = htmlspecialchars($_POST['text']);
+            $data_save['phone'] = htmlspecialchars($_POST['phone']);
         }
 
         $data_save_file = array();
@@ -53,7 +53,7 @@ class Comment extends Controller {
 	public function ajaxDetail()
     {
         if(isset($_POST['id'])) {
-            $id = htmlspecialchars(stripslashes($_POST['id']));
+            $id = htmlspecialchars($_POST['id']);
             $data = $this->model->detail($id);
 
             //var_dump($data);
@@ -66,7 +66,7 @@ class Comment extends Controller {
     public function saveFile()
     {
         $target_dir = "uploads/";
-        $target_file = $target_dir . date("YmdHis"). '_' .basename(htmlspecialchars(stripslashes($_FILES["fileToUpload"]["name"])));
+        $target_file = $target_dir . date("YmdHis"). '_' .basename(htmlspecialchars($_FILES["fileToUpload"]["name"]));
         $file_name = !empty($_FILES["fileToUpload"]["name"]) ? basename($target_file) : '';
         //var_dump($file_name );
         //exit();
@@ -76,7 +76,7 @@ class Comment extends Controller {
         // Check if image file is a actual image or fake image
 
         if(isset($_POST["submit"])) {
-            $check = getimagesize(htmlspecialchars(stripslashes($_FILES["fileToUpload"]["tmp_name"])));
+            $check = getimagesize(htmlspecialchars($_FILES["fileToUpload"]["tmp_name"]));
             //var_dump($check);
 
             if($check !== false) {
@@ -103,7 +103,7 @@ class Comment extends Controller {
             // if everything is ok, try to upload file
         } else {
 
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            if (move_uploaded_file(htmlspecialchars($_FILES["fileToUpload"]["tmp_name"]), $target_file)) {
 
                 list($width, $height) = getimagesize($target_file);
 
@@ -121,7 +121,7 @@ class Comment extends Controller {
                     }
                 }
 
-                $message = "The file ". htmlspecialchars(stripslashes(basename($_FILES["fileToUpload"]["name"]))). " has been uploaded.";
+                $message = "The file ". htmlspecialchars(basename($_FILES["fileToUpload"]["name"])). " has been uploaded.";
             } else {
                 $message = "Sorry, there was an error uploading your file.";
             }

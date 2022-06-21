@@ -1,8 +1,10 @@
 <?php
 
+
 class User extends Controller
 {
-	public function __construct() {
+	public function __construct()
+    {
 		parent::__construct();
 		Session::init();
 		$logged = Session::get('loggedIn');
@@ -15,21 +17,23 @@ class User extends Controller
 		}
 	}
 
-	public function index() {
-		$this -> view  -> userList = $this -> model -> userList(3,1);
-		$this -> view -> render('user/index');
+	public function index()
+    {
+        $limit = $this->get_params['limit'] ?: 3;
+        $page = $this->get_params['page'] ?: 1;
+        $sort = $this->get_params['sort'] ?: 'date_create';
+        $descAsc = $this->get_params['$descAsc'] ?: 'DESC';
+        $data = $this->model->userList($limit, $page, $sort, $descAsc);
+
+		$this->view->render('user/index',$data);
 	}
 
+	public function edit()
+    {
+        $id = $this->get_params['id'] ?: 0;
 
-	function pagination($limit , $page, $sort_value) {
- 		$this -> view  -> userList = $this -> model -> userList($limit, $page, $sort_value);	
- 		$this -> view -> render('user/index');
-
- 	}
-
-	public function edit($id) {	
-		$this -> view -> user = $this -> model -> userSingleList($id);
-		$this -> view -> render ('user/edit');
+		$this->view->user = $this->model->userSingleList($id);
+		$this->view->render('user/edit');
 	}
 
 	public function editSave($id) {	
@@ -37,7 +41,7 @@ class User extends Controller
 		$data['id'] = $id;
 		$data['text'] = $_POST['text'];
 		$data['status'] = $_POST['status'];
-		// @TODO :Do your error checking
+
 		$this -> model -> editSave($data);
 		header('location: '.URL.'user');
 	}
@@ -48,5 +52,3 @@ class User extends Controller
 	}
 	
 }
-
-?>

@@ -53,7 +53,7 @@
            <!-- <td><a class="opener" href="#">Предварительный просмотр</a></td>-->
             <td><a class="opener" href="#"><input type="hidden" value="<?= $value['id'] ?>"/>Предварительный просмотр</a></td>
 
-            <td><img src="<?=URL?>/uploads/<?= $value['file_name']?>"/> </td>
+            <td><img src="<?=URL?>uploads/<?= $value['file_name']?>"/> </td>
 
         </tr>
         <?php } ?>
@@ -91,7 +91,7 @@
             <input name="email" type="email" class="form-control" id="emailUser" placeholder="name@example.com" required>
 
             <label for="text">Текст сообщения</label>
-            <textarea name ="text" class="form-control" id="text" rows="3"></textarea>
+            <textarea name ="text" class="form-control" id="text" rows="3" required></textarea>
 
             <input class="form-control" type="file" name="fileToUpload" id="fileToUpload">
 
@@ -103,7 +103,9 @@
     </div>
 
 </form>
+<?php
 
+?>
 <div id="ModalDialogComment">
 
 </div>
@@ -131,20 +133,20 @@
             $( ".modal-dialog__data" ).remove();
             //id_val = 2088;
             $.post(
-                "comment/ajaxDetail",
+                "<?=URL?>comment/ajaxDetail",
                 {
                     id: id_val,
                 },
                 function(data, status){
                     data = JSON.parse(data);
+                   // console.log(data);
                     if (status ==='success' && data.length !== 0) {
                         $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Имя : </b>"+data[0].name+"</p>" );
                         $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Email : </b>"+data[0].email+"</p>" );
                         $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Текст комментария: </b>"+data[0].text+"</p>" );
                         $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Телефон : </b>"+data[0].phone+"</p>" );
-                        $( "#ModalDialogComment" ).append( "<div class='modal-dialog__data'><img src='uploads/"+data[0].file_name+"'/></div>" );
+                        $( "#ModalDialogComment" ).append( "<div class='modal-dialog__data'><img src='<?=URL?>uploads/"+data[0].file_name+"'/></div>" );
                         $( "#ModalDialogComment" ).append( "<p class='modal-dialog__data'><b>Дата создания : </b>"+data[0].date_create+"</p>" );
-
                         $( "#ModalDialogComment" ).dialog( "open" );
                     } else {
                         $( "#ModalDialogComment" ).append( "<h4 class='modal-dialog__data'>Данные не найдены!</h4>" );

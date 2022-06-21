@@ -2,7 +2,7 @@
 
 class Comment_Model extends Model
 {
-    static $table = 'comments';
+
 	function __construct()
 	{
 		parent::__construct();
@@ -10,7 +10,7 @@ class Comment_Model extends Model
 
 	public function userList($limit = null, $page = null, $sort = null)
 	{
-        $sthTotal = $this->db->prepare('select count(id) as total from '.self::$table);
+        $sthTotal = $this->db->prepare('select count(id) as total from comments');
         $sthTotal->execute();
         $arrTotal = $sthTotal->fetchAll();
         $data['total'] = $arrTotal[0]['total'];
@@ -20,8 +20,7 @@ class Comment_Model extends Model
         $sort = $sort ?: 'date_create';
         $start = ($page - 1) * $limit;
 
-
-        $sth = $this->db->prepare('select id, name, email, text, status, phone, file_name, date_create from '.self::$table.' order by '.$sort.' DESC LIMIT :start, :limit');
+        $sth = $this->db->prepare('select id, name, email, text, status, phone, file_name, date_create from comments order by '.$sort.' DESC LIMIT :start, :limit');
 
 	    $sth->bindValue(":start", $start, PDO::PARAM_INT);
         $sth->bindValue(":limit", $limit, PDO::PARAM_INT);
@@ -40,7 +39,6 @@ class Comment_Model extends Model
         $data['pages'] = ceil($data['total']/3);
         $data['Previous'] = $page == 1 ? $data['total'] : $page - 1;
         $data['Next'] = $page == $data['pages'] ? $data['pages'] : $page + 1;
-
         return $data;
 	}
 
@@ -50,10 +48,8 @@ class Comment_Model extends Model
     public function create($data)
     {
         $count = 0;
-       // var_dump($data);
-       // exit();
         if (!empty($data)) {
-            $sth = $this->db->prepare('insert into '.self::$table.' (name, email, text, phone, file_name) values (:name, :email, :text, :phone, :file_name)');
+            $sth = $this->db->prepare('insert into comments (name, email, text, phone, file_name) values (:name, :email, :text, :phone, :file_name)');
             $sth->execute(array(
                 ':name' => $data['name'],
                 ':email' => $data['email'],
@@ -83,12 +79,9 @@ class Comment_Model extends Model
 
     public function detail($id = 0)
     {
-        $sth = $this->db->prepare('select id, name, email, text, status, phone, file_name, date_create from '.self::$table. ' where id = :id');
+        $sth = $this->db->prepare('select id, name, email, text, status, phone, file_name, date_create from comments where id = :id');
         $sth->bindValue(":id", $id, PDO::PARAM_INT);
         $sth->execute();
-        $data = $sth->fetchAll(PDO::FETCH_ASSOC);
-       // var_dump($data);
-       // exit();
-        return $data;
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 }

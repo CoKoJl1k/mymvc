@@ -22,7 +22,7 @@
 			<div class="col-11"><a class="menu" href="<?php echo URL; ?>comment">Главная страница</a> </div>
 		<?php endif; ?>
 
-<!--<?php echo Session::get('loggedIn');?>-->
+<!--<?php //echo Session::get('loggedIn');?>-->
 		<?php if (Session::get('loggedIn') == true ): ?>
 
 			<?php if (Session::get('role') == 'owner' ): ?>
