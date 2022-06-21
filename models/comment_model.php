@@ -10,7 +10,7 @@ class Comment_Model extends Model
 
 	public function getListComments($limit = null, $page = null, $sort = null)
 	{
-        $sthTotal = $this->db->prepare('select count(id) as total from comments');
+        $sthTotal = $this->db->prepare('select count(id) as total from comments where status = "Y"');
         $sthTotal->execute();
         $arrTotal = $sthTotal->fetchAll();
         $data['total'] = $arrTotal[0]['total'];
@@ -20,7 +20,7 @@ class Comment_Model extends Model
         $sort = $sort ?: 'date_create';
         $start = ($page - 1) * $limit;
 
-        $sth = $this->db->prepare('select id, name, email, text, status, phone, file_name, date_create from comments order by '.$sort.' DESC LIMIT :start, :limit');
+        $sth = $this->db->prepare('select id, name, email, text, status, phone, file_name, date_create from comments  where status = "Y" order by '.$sort.' DESC LIMIT :start, :limit');
 
 	    $sth->bindValue(":start", $start, PDO::PARAM_INT);
         $sth->bindValue(":limit", $limit, PDO::PARAM_INT);
@@ -42,9 +42,7 @@ class Comment_Model extends Model
         return $data;
 	}
 
-    /**
-     * @throws Exception
-     */
+
     public function create($data)
     {
         $count = 0;
@@ -59,22 +57,11 @@ class Comment_Model extends Model
             ));
             $count = $sth->rowCount();
         }
-
         if ($count > 0) {
             return true;
-            /*
-			echo '<script type="text/javascript">
-						window.location = "../comment";
-						alert("Task added successful!");
-				  </script>';
-			*/
 		} else {
-           return false;
-            //show error
-           // throw new Exception('Data was not insert into table');
-			//header('location: ../error');
+            return false;
 		}
-
 	}
 
     public function detail($id = 0)

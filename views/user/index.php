@@ -12,9 +12,6 @@
         <thead>
         <tr>
             <th scope="col">
-                <a  href="<?=URL?>user?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][0] ?>">№</a>
-            </th>
-            <th scope="col">
                 <a  href="<?=URL?>user?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][1] ?>">Имя</a>
             </th>
             <th scope="col">
@@ -31,35 +28,28 @@
                 <a  href="<?=URL?>user?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][4] ?>">Статус</a>
             </th>
           <!--  <th scope="col">Изображение</th>-->
-
             <th scope="col">
                 <a  href="<?=URL?>user?limit=<?= $data['limit'] ?: '' ?>&page=<?= $data['page'] ?>&sort=<?= $data['columns'][6] ?>">Дата создания</a>
             </th>
         <!--    <th>Предварительный просмотр</th>-->
             <th scope="col">Изображение</th>
+            <th scope="col">#</th>
+            <th scope="col">#</th>
         </tr>
         <?php // echo '<pre>'; print_r($data); echo '<pre>';  exit();?>
         <?php if (count($data['comment']) > 0) {  ?>
             <?php  foreach ($data['comment'] as $value) { ?>
                 <tr>
-                    <td><?= $value['id'] ?></td>
                     <td><?= $value['name'] ?></td>
                     <td><?= $value['phone'] ?></td>
                     <td><?= $value['email'] ?></td>
                     <td><?= $value['text'] ?></td>
-
-                  <!--  <td><?//= $value['status'] == 'Y' ?  'Принят' :  'Отклонен' ?></td>-->
-
-                    <td><a  href="<?URL?>user/statusUpdate?id=<?= $value['id']?>&status=<?= $value['status']?>"><?= $value['status'] == 'Y' ?  'Принят' :  'Отклонен' ?></a></td>
-
-                   <!-- <td><?//=  $value['file_name']?></td>-->
+                    <td><a href="<?URL?>user/statusUpdate?id=<?= $value['id']?>&status=<?= $value['status']?>"><?= $value['status'] == 'Y' ?  'Принят' :  'Отклонен' ?></a></td>
                     <td><?= $value['date_create']?></td>
-
-                    <!--<td><a class="opener" href="#"><input type="hidden" value="<? //= $value['id'] ?>"/>Предварительный просмотр</a></td> -->
-                    <td><img src="<?=URL?>uploads/<?= $value['file_name']?>" width="100px" height="70px"/> </td>
-
+                    <td><img src="<?=URL?>uploads/<?= $value['file_name']?>" width="100px" height="70px"/></td>
                     <td><a  href="<?URL?>user/edit?id=<?= $value['id'] ?>">Редактировать</a></td>
 
+                    <td><?= $value['status_edit'] === 'owner' ? 'Изменен администратором' : '' ?></td>
                 </tr>
             <?php } ?>
         <?php } ?>

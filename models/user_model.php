@@ -20,7 +20,7 @@ class User_Model extends Model
         $sort = $sort ?: 'date_create';
         $start = ($page - 1) * $limit;
 
-        $sth = $this->db->prepare('select id, name, email, text, status, phone, file_name, date_create from comments order by '.$sort.' DESC LIMIT :start, :limit');
+        $sth = $this->db->prepare('select id, name, email, text, status, phone, file_name, date_create, status_edit from comments order by '.$sort.' DESC LIMIT :start, :limit');
 
         $sth->bindValue(":start", $start, PDO::PARAM_INT);
         $sth->bindValue(":limit", $limit, PDO::PARAM_INT);
@@ -90,16 +90,18 @@ class User_Model extends Model
     {
         $sth = $this->db->prepare('update comments set `status` = :status where id = :id');
         $sth->execute( array(
-            ':id' => $data['id_comment'],
+            ':id' => $data['id'],
             ':status' => $data['status'],
         ));
     }
 
     public function textUpdateComment($data)
     {
-        $sth = $this->db->prepare('update comments set `text` = :text, `text` = :text, `status_edit` = :role   where id = :id');
-        $sth->execute( array(
-            ':id' => $data['id_comment'],
+        //var_dump($data);
+       // exit();
+        $sth = $this->db->prepare('update comments set text = :text, status_edit = :role where id = :id');
+        return $sth->execute( array(
+            ':id' => $data['id'],
             ':text' => $data['text'],
             ':role' => $data['role']
         ));

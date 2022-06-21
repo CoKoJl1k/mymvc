@@ -32,6 +32,5 @@ class Login extends Controller {
         } else {
             header('location: ../login');
         }
-
  	}
 }

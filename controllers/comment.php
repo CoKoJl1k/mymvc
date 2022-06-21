@@ -13,10 +13,7 @@ class Comment extends Controller {
         $limit = $this->get_params['limit'] ?: 3;
         $page = $this->get_params['page'] ?: 1;
         $sort = $this->get_params['sort'] ?: 'date_create';
-        $descAsc = $this->get_params['$descAsc'] ?: 'DESC';
-
-        $data = $this->model->getListComments($limit, $page, $sort, $descAsc);
-
+        $data = $this->model->getListComments($limit, $page, $sort);
  		$this->view->render('comment/index', $data);
  	}
 
@@ -52,10 +49,8 @@ class Comment extends Controller {
 	public function ajaxDetail()
     {
         if(isset($_POST['id'])) {
-            $id = htmlspecialchars($_POST['id']);
+            $id = addslashes(htmlspecialchars($_POST['id']));
             $data = $this->model->detail($id);
-
-            //var_dump($data);
             echo json_encode($data);
         }
         return false;
@@ -67,16 +62,11 @@ class Comment extends Controller {
         $target_dir = "uploads/";
         $target_file = $target_dir . date("YmdHis"). '_' .basename(htmlspecialchars($_FILES["fileToUpload"]["name"]));
         $file_name = !empty($_FILES["fileToUpload"]["name"]) ? basename($target_file) : '';
-        //var_dump($file_name );
-        //exit();
         $uploadOk = 1;
-
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
         // Check if image file is a actual image or fake image
-
         if(isset($_POST["submit"])) {
             $check = getimagesize(htmlspecialchars($_FILES["fileToUpload"]["tmp_name"]));
-            //var_dump($check);
 
             if($check !== false) {
                 $message = "File is an image - " . $check["mime"] . ".";
@@ -119,7 +109,6 @@ class Comment extends Controller {
                         if ($imageFileType == "gif") imagegif($imgResized, $target_file);
                     }
                 }
-
                 $message = "The file ". htmlspecialchars(basename($_FILES["fileToUpload"]["name"])). " has been uploaded.";
             } else {
                 $message = "Sorry, there was an error uploading your file.";
