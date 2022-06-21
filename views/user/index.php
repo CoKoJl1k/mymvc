@@ -36,12 +36,14 @@
                     <td><?= $value['phone'] ?></td>
                     <td><?= $value['email'] ?></td>
                     <td><?= $value['text'] ?></td>
-                    <td><a href="<?URL?>user/statusUpdate?id=<?= $value['id']?>&status=<?= $value['status']?>"><?= $value['status'] == 'Y' ?  'Принят' :  'Отклонен' ?></a></td>
+                    <td><a href="<?=URL?>user/statusUpdate?id=<?= $value['id']?>&status=<?= $value['status']?>"><?= $value['status'] == 'Y' ?  'Принят' :  'Отклонен' ?></a></td>
                     <td><?= $value['date_create']?></td>
                     <td><img src="<?=URL?>uploads/<?= $value['file_name']?>" width="100px" height="70px"/></td>
-                    <td><a  href="<?URL?>user/edit?id=<?= $value['id'] ?>">Редактировать</a></td>
+                    <td><a  href="<?=URL?>user/edit?id=<?= $value['id'] ?>">Редактировать</a></td>
 
                     <td><?= $value['status_edit'] === 'owner' ? 'Изменен администратором' : '' ?></td>
+
+                    <td><a  href="<?=URL?>user/delete?id=<?= $value['id'] ?>">Удалить</a></td>
                 </tr>
             <?php } ?>
         <?php } ?>
